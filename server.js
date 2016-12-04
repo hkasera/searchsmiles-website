@@ -4,7 +4,7 @@ var express = require('express');
 var fs      = require('fs');
 var path    =  require('path');
 var ejs = require('ejs');
-
+var api = require('./core/api');
 /**
  *  Define the sample application.
  */
@@ -111,6 +111,16 @@ var SampleApp = function() {
             //res.send(self.cache_get('maps.html') );
             res.render("maps.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY});
         };
+
+        self.routes['/api/get/ngos/location'] = function(req,res){
+            res.setHeader('Content-Type', 'application/json');
+            api.getLocation(function(docs){
+                res.send(docs);
+            },function(err){
+                res.status(500).send(err);
+            })
+            
+        }
     };
 
 
