@@ -1,0 +1,23 @@
+<% include partials/header %>
+
+<div class="container-bottom">
+  
+   
+      <div class="row">
+      <% for(var i=0; i < ngos.length; i++) { %>
+        <div class="col s12 m2">
+        <a href='/ngo/<%= ngos[i]["_id"] %>'>
+          <div class="card small">
+            <div class="card-image">
+                        <img src="http://lorempixel.com/150/150/">
+            
+            </div>
+            <div class="card-title teal-text" style="font-size:15px;padding:10px"><%= substr(ngos[i]["_source"]["name"],40) %></div>
+          </div>
+        </a>
+        </div>
+        <% } %>
+        </div>
+
+
+<% include partials/footer %>
