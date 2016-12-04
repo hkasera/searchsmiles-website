@@ -6,7 +6,7 @@ var getLocation = function(callback, err_callback) {
         type: 'ngo',
         size:100,
         body: {
-            "_source": ["location"],
+            "_source": ["name","location"],
             "query": {
                 "bool": {
                     "must": [{
@@ -18,13 +18,14 @@ var getLocation = function(callback, err_callback) {
             }
         }
     }).then(function(resp) {
-        var locationArr = resp.hits.hits.map(function(obj){ 
-          var loc = {}
-          loc["lat"] = obj["_source"]["location"]["lat"];
-          loc["lng"] = obj["_source"]["location"]["lon"];
-          return loc;
+        var ngoArr = resp.hits.hits.map(function(obj){ 
+          var ngo = {}
+          ngo["lat"] = obj["_source"]["location"]["lat"];
+          ngo["lng"] = obj["_source"]["location"]["lon"];
+          ngo["name"] = obj["_source"]["name"];
+          return ngo;
         });
-        callback(locationArr);
+        callback(ngoArr);
     }, function(err) {
         err_callback(err);
     });

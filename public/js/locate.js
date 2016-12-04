@@ -1,16 +1,14 @@
-var locations = [];
-
 var fetchLocations = function() {
     $.getJSON('/api/get/ngos/location').done(function(data) {
-        locations = data;
+        setUpMap(data);
     }).fail(function() {
         console.log("Failed to fetch locations");
     }).done(function() {
-        setUpMap();
+        
     });
 }
 
-var setUpMap = function() {
+var setUpMap = function(ngoArr) {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
         center: {
@@ -18,12 +16,22 @@ var setUpMap = function() {
             lng: -94.6812059
         }
     });
+    var infowindow = new google.maps.InfoWindow();
+    
 
-    var markers = locations.map(function(location, i) {
-        return new google.maps.Marker({
-            position: location,
+    var markers = ngoArr.map(function(ngo, i) {
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(ngo.lat, ngo.lng),
             icon: "/img/ngo-marker.png"
         });
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            var contentString = "<div>"+ngo.name+"</div>";
+            infowindow.setContent(contentString);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
+        return marker;
     });
 
     // Add a marker clusterer to manage the markers.
