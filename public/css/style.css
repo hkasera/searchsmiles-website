@@ -51,6 +51,9 @@ body {
 .tbpadding10{
     padding: 10px 0;
 }
+.container-bottom{
+    margin-bottom: 50px;
+}
 footer{
     position: fixed;
     bottom: 0;
@@ -58,4 +61,16 @@ footer{
     background: #FFF;
     display: block;
     width: 100%;
+}
+.filter-slide{
+    display: inline-block;
+    padding: 10px;
+    position: fixed;
+    top: 30px;
+    z-index: 88;
+    background: #039be5;
+    color: #FFF;
+    border-radius: 10px;
+    left: -10px;
+    padding-left: 30px;
 }

@@ -4,7 +4,7 @@ var getLocation = function(callback, err_callback) {
     client.search({
         index: 'ngos',
         type: 'ngo',
-        size:1000,
+        size:5000,
         body: {
             "_source": ["name","location"],
             "query": {
@@ -18,15 +18,30 @@ var getLocation = function(callback, err_callback) {
             }
         }
     }).then(function(resp) {
-        var ngoArr = resp.hits.hits.map(function(obj){ 
-          var ngo = {}
-          ngo["lat"] = obj["_source"]["location"]["lat"];
-          ngo["lng"] = obj["_source"]["location"]["lon"];
-          ngo["name"] = obj["_source"]["name"];
-          ngo["_id"] = obj["_id"];
-          return ngo;
-        });
-        callback(ngoArr);
+        callback(resp.hits.hits);
+    }, function(err) {
+        err_callback(err);
+    });
+}
+
+var getNGOs = function(callback, err_callback) {
+    client.search({
+        index: 'ngos',
+        type: 'ngo',
+        size:1000,
+        body: {
+            "query": {
+                "bool": {
+                    "must": [{
+                        "exists": {
+                            "field": "location"
+                        }
+                    }]
+                }
+            }
+        }
+    }).then(function(resp) {
+        callback(resp.hits.hits);
     }, function(err) {
         err_callback(err);
     });
@@ -46,5 +61,6 @@ var getNGODetails = function(id,callback, err_callback) {
 //Exports added
 module.exports = {
     getLocation: getLocation,
-    getNGODetails:getNGODetails
+    getNGODetails:getNGODetails,
+    getNGOs:getNGOs
 };

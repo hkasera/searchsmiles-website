@@ -110,6 +110,14 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.render("maps.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY});
         };
+        self.routes['/ngos'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            api.getNGOs(function(ngos){
+                res.render("ngo-list.ejs",{API_KEY:  process.env.GMAPP_BROWSER_KEY,"ngos":ngos});
+            },function(err){
+                res.status(500).send(err);
+            }) 
+        };
         self.routes['/ngo/:id'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             api.getNGODetails(req.params.id,function(ngo){

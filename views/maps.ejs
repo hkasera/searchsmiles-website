@@ -1,10 +1,40 @@
 <% include partials/header %>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<div id="slide-out" class="side-nav">
+    <div class="row">
 
+    <form class="col s12">
+    	<div class="input-field col s12">
+      	<h5>Filter</h5></div>
+      <div class="input-field col s12">
+      
+	    <select>
+	      <option value="" disabled selected>Choose your option</option>
+	      <option value="1">Option 1</option>
+	      <option value="2">Option 2</option>
+	      <option value="3">Option 3</option>
+	    </select>
+	    <label>Materialize Select</label>
+	  </div>
+	  <div class="input-field col s12">
+	  	<div class="switch">
+    <label>
+      Off
+      <input type="checkbox">
+      <span class="lever"></span>
+      On
+    </label>
+  </div>
+	  </div>
+	  
+    </form>
+  	</div>
+  </div>
+  <a href="#" data-activates="slide-out" class="button-collapse filter-slide">Filter&nbsp;&nbsp;<i class="fa fa-caret-right" aria-hidden="true"></i></a>
+        
 <div id="map"></div>
-   
+<% include partials/footer %>  
 <script src="js/locate.js"></script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap">
 </script>
-<% include partials/footer %>

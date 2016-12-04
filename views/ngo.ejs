@@ -5,6 +5,27 @@
 <div class="container center">
 	<h4><%= ngo.name %></h4>
 	<h6><%= ngo.address %></h6>
+	<% if (ngo.link) { %>
+		<div class="tbpadding10">
+			<a href="<%= ngo.link %>">
+		    	<i class="fa fa-link" aria-hidden="true"></i>&nbsp;Website
+		  </a>
+		</div>
+	<% } else if (ngo.source_link) { %>
+		<div class="tbpadding10">
+			<a href="<%= ngo.source_link %>">
+		    	<i class="fa fa-link" aria-hidden="true"></i>&nbsp;Website
+		  </a>
+		</div>
+	<% } else { %>
+	<% } %>
+	<% if (ngo.source_data.irs_subsection) { %>
+		<div class="tbpadding10">
+			<div class="chip">
+		    	<%= ngo.source_data.irs_subsection %>
+		  </div>
+		</div>
+	<% } %>
 	<% if (ngo.mission) { %>
 	   <p>
 		<%= ngo.fb_data.mission %>

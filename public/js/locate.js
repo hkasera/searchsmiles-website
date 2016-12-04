@@ -21,12 +21,12 @@ var setUpMap = function(ngoArr) {
 
     var markers = ngoArr.map(function(ngo, i) {
         var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(ngo.lat, ngo.lng),
+            position: new google.maps.LatLng(ngo["_source"]["location"].lat, ngo["_source"]["location"].lon),
             icon: "/img/ngo-marker.png"
         });
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
-            var contentString = "<div><a href='/ngo/"+ngo._id+"'>"+ngo.name+"</a></div>";
+            var contentString = "<div><a href='/ngo/"+ngo._id+"'>"+ngo["_source"].name+"</a></div>";
             infowindow.setContent(contentString);
             infowindow.open(map, marker);
           }
