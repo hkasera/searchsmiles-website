@@ -12,8 +12,8 @@ var setUpMap = function(ngoArr) {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
         center: {
-            lat: 38.2875989,
-            lng: -94.6812059
+            lat: 38.1946799,
+            lng: -102.4908646
         }
     });
     var infowindow = new google.maps.InfoWindow();

@@ -1,34 +1,47 @@
-/* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      .circle-marker {
-  background-color: #fd7d08;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  -webkit-box-align: center;
-  box-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-  box-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 13px;
-  opacity: .85;
-  cursor: pointer;
-  width: 35px;
-  height: 35px;
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', "Helvetica Neue",Helvetica,Arial,sans-serif!important;
+}
+#map {
+    height: 100%;
+}
+.circle-marker {
+    background-color: #fd7d08;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    opacity: .85;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+}
+.bg-inverse {
+    background-color: #222;
+    border-color: #080808;
+}
+.navbar-ss {
+    background-color: #FFF;
+}
+.jumbotron{
+    margin-top: -31px;
+    background-image: url('https://userscontent2.emaze.com/images/0f308014-e877-42df-9ec4-ffe0ebe6af73/d9241eab6ef8be1b2ed124adda771af5.jpg')
+}
+.site-header, .site-header .main-icon{
+    font-size: 20px;
 }

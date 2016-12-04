@@ -39,12 +39,12 @@ var SampleApp = function() {
      *  Populate the cache.
      */
     self.populateCache = function() {
-        if (typeof self.zcache === "undefined") {
+        /*if (typeof self.zcache === "undefined") {
             self.zcache = { 'index.html': '' };
-        }
+        }*/
 
         //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./index.html');
+        //self.zcache['index.html'] = fs.readFileSync('./index.html');
        // self.zcache['maps.html'] = fs.readFileSync('./views/maps.html');
     };
 
@@ -104,9 +104,9 @@ var SampleApp = function() {
 
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
+            res.render('index.ejs');
         };
-        self.routes['/maps'] = function(req, res) {
+        self.routes['/explore'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             //res.send(self.cache_get('maps.html') );
             res.render("maps.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY});
