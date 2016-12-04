@@ -49,7 +49,7 @@
 
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
-          center: {lat: 36.2398864, lng: -113.7644643}
+          center: {lat: 38.2875989, lng: -94.6812059}
         });
 
         // Create an array of alphabetical characters used to label the markers.
@@ -62,8 +62,8 @@
         var markers = locations.map(function(location, i) {
           return new google.maps.Marker({
             position: location,
-            //icon:"https://binwatch-ghci.rhcloud.com/img/filledbin.png",
-            label: labels[i % labels.length]
+            icon:"/img/ngo-marker.png"
+            //label: labels[i % labels.length]
           });
         });
 
