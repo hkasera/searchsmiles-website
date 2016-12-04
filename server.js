@@ -113,7 +113,7 @@ var SampleApp = function() {
         self.routes['/ngo/:id'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             api.getNGODetails(req.params.id,function(ngo){
-                res.render("ngo.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY,"ngo":ngo}});
+                res.render("ngo.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY,"ngo":ngo});
             },function(err){
                 res.status(500).send(err);
             })    
