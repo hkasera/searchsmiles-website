@@ -2,7 +2,8 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-
+var path    =  require('path');
+var ejs = require('ejs');
 
 /**
  *  Define the sample application.
@@ -44,6 +45,7 @@ var SampleApp = function() {
 
         //  Local cache for static content.
         self.zcache['index.html'] = fs.readFileSync('./index.html');
+       // self.zcache['maps.html'] = fs.readFileSync('./views/maps.html');
     };
 
 
@@ -104,6 +106,11 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
         };
+        self.routes['/maps'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            //res.send(self.cache_get('maps.html') );
+            res.render("maps.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY});
+        };
     };
 
 
@@ -140,6 +147,8 @@ var SampleApp = function() {
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
+        self.app.engine('html', ejs.renderFile);
+        self.app.use(express.static(path.join(__dirname, 'public')));
         self.app.listen(self.port, self.ipaddress, function() {
             console.log('%s: Node server started on %s:%d ...',
                         Date(Date.now() ), self.ipaddress, self.port);
