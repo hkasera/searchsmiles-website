@@ -26,7 +26,7 @@ var setUpMap = function(ngoArr) {
         });
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
-            var contentString = "<div>"+ngo.name+"</div>";
+            var contentString = "<div><a href='/ngo/"+ngo._id+"'>"+ngo.name+"</a></div>";
             infowindow.setContent(contentString);
             infowindow.open(map, marker);
           }

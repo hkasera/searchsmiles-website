@@ -4,7 +4,7 @@ var getLocation = function(callback, err_callback) {
     client.search({
         index: 'ngos',
         type: 'ngo',
-        size:100,
+        size:1000,
         body: {
             "_source": ["name","location"],
             "query": {
@@ -23,6 +23,7 @@ var getLocation = function(callback, err_callback) {
           ngo["lat"] = obj["_source"]["location"]["lat"];
           ngo["lng"] = obj["_source"]["location"]["lon"];
           ngo["name"] = obj["_source"]["name"];
+          ngo["_id"] = obj["_id"];
           return ngo;
         });
         callback(ngoArr);
@@ -31,6 +32,19 @@ var getLocation = function(callback, err_callback) {
     });
 }
 
+var getNGODetails = function(id,callback, err_callback) {
+    client.get({
+        index: 'ngos',
+        type: 'ngo',
+        "id": id
+    }).then(function(resp) {
+        callback(resp["_source"]);
+    }, function(err) {
+        err_callback(err);
+    });
+}
+
 module.exports = {
-    getLocation: getLocation
+    getLocation: getLocation,
+    getNGODetails:getNGODetails
 };

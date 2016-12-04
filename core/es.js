@@ -11,7 +11,7 @@ var client = new elasticsearch.Client({
 });
 
 client.ping({
-  requestTimeout: Infinity
+  requestTimeout: 1000
 }, function (error) {
   if (error) {
     console.log(error);

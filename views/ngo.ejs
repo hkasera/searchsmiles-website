@@ -1,0 +1,64 @@
+<% include partials/header %>
+<div class="map-container">
+    <div id="map"></div>
+</div>
+<div class="container center">
+	<h4><%= ngo.name %></h4>
+	<h6><%= ngo.address %></h6>
+	<% if (ngo.mission) { %>
+	   <p>
+		<%= ngo.fb_data.mission %>
+		</p>
+	<% } else if (ngo.fb_data && ngo.fb_data.mission) { %>
+	<p>
+		<%= ngo.fb_data.mission %>
+	</p>
+	<% } %>
+</div>
+<% if (ngo.fb_events && ngo.fb_events.data) { %>
+<div class="center tbpadding10">
+	<h5> Events </h5>
+	<div class="row">
+	<% for(var i=0; i < min(ngo.fb_events.data.length,4); i++) { %>
+	<div class="col s12 m3">
+	   	<div class="card horizontal" style="padding:10px">
+	      <div class="card-stacked">
+	        <h6 class="teal-text"><%= substr(ngo.fb_events.data[i].name,40) %></h6>
+	        <div class="card-content">
+	          <p><%= substr(ngo.fb_events.data[i].description,100) %></p>
+	        </div>
+	      </div>
+   		</div>
+   	</div>
+	<% } %>
+	</div>
+</div>
+<% } %>
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap">
+</script>
+<script type="text/javascript">
+	function initMap() {
+		var map, initialLocation, marker, mapOptions, infowindow;
+	   initialLocation = new google.maps.LatLng(<%= ngo.location.lat %>,<%= ngo.location.lon %>);
+	   mapOptions = {
+	       zoom: 12,
+	       center: initialLocation
+	   }
+	   map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	   marker = new google.maps.Marker({
+	       position: initialLocation,
+	       title: "<%= ngo.name %>"
+	   });
+	   infowindow = new google.maps.InfoWindow({
+	       content: "<%= ngo.name %>"
+	     });
+	   marker.addListener('click', function() {
+	       infowindow.open(map, marker);
+	   });
+	   marker.setMap(map);
+	}
+</script>
+
+<% include partials/footer %>

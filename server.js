@@ -108,9 +108,26 @@ var SampleApp = function() {
         };
         self.routes['/explore'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            //res.send(self.cache_get('maps.html') );
             res.render("maps.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY});
         };
+        self.routes['/ngo/:id'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            api.getNGODetails(req.params.id,function(ngo){
+                res.render("ngo.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY,"ngo":ngo}});
+            },function(err){
+                res.status(500).send(err);
+            })    
+        };
+
+        self.routes['/api/get/ngo/:id'] = function(req, res) {
+            res.setHeader('Content-Type', 'application/json');
+            api.getNGODetails(req.params.id,function(docs){
+                res.send(docs);
+            },function(err){
+                res.status(500).send(err);
+            })
+        };
+        
 
         self.routes['/api/get/ngos/location'] = function(req,res){
             res.setHeader('Content-Type', 'application/json');
@@ -131,6 +148,12 @@ var SampleApp = function() {
     self.initializeServer = function() {
         self.createRoutes();
         self.app = express.createServer();
+        self.app.locals.substr = function(string,length) {
+            return string.substring(0,length);
+        }
+        self.app.locals.min = function(x,y) {
+            return x < y ? x : y;
+        }
 
         //  Add handlers for the app (from the routes).
         for (var r in self.routes) {
