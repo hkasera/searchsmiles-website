@@ -43,7 +43,7 @@ var getNGODetails = function(id,callback, err_callback) {
         err_callback(err);
     });
 }
-
+//Exports added
 module.exports = {
     getLocation: getLocation,
     getNGODetails:getNGODetails
