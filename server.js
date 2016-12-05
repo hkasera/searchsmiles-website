@@ -111,6 +111,10 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.render("maps.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY});
         };
+        self.routes['/dashboard'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            res.render("stats.ejs");
+        };
         self.routes['/ngos'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             api.getNGOs(function(ngos){
