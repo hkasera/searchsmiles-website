@@ -3,7 +3,7 @@ var client = new elasticsearch.Client({
   host: [
     {
       host: process.env.ELASTIC_HOST,
-      auth: process.env.ELASTIC_USERNAME+':'+process.env.ELASTIC_PAS
+      auth: process.env.ELASTIC_USERNAME+':'+process.env.ELASTIC_PASS,
       protocol: 'http',
       port: 9200
     }
