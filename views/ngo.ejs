@@ -1,9 +1,14 @@
 <% include partials/header %>
+<% if (ngo.location) { %>
 <div class="map-container">
     <div id="map"></div>
 </div>
+<% } %>
 <div class="container center">
 	<h4><%= ngo.name %></h4>
+	<% if(ngo.rating) { %>
+        Rated as : <span class="chip teal white-text"><%= ngo.rating %></span> on Charity Watch
+    <% } %>
 	<h6><%= ngo.address %></h6>
 	<% if (ngo.link) { %>
 		<div class="tbpadding10">
@@ -19,6 +24,7 @@
 		</div>
 	<% } else { %>
 	<% } %>
+	
 	<% if (ngo.source_data && ngo.source_data.irs_subsection) { %>
 		<div class="tbpadding10">
 			<div class="chip">
@@ -55,7 +61,7 @@
 	</div>
 </div>
 <% } %>
-
+<% if (ngo.location) { %>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap">
 </script>
@@ -81,5 +87,5 @@
 	   marker.setMap(map);
 	}
 </script>
-
+<% } %>
 <% include partials/footer %>

@@ -2,8 +2,8 @@ var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
   host: [
     {
-      host: process.env.ELASTIC_HOST,
-      auth: process.env.ELASTIC_USERNAME+':'+process.env.ELASTIC_PASS,
+      host: "6ababf46412e5cd9ff51a87e3b704981.us-west-1.aws.found.io",
+      auth: 'elastic:QHtaXf3aNCwJtuz66nKZfnRq',
       protocol: 'http',
       port: 9200
     }
