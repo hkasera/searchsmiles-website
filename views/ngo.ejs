@@ -10,21 +10,47 @@
         Rated as : <span class="chip teal white-text"><%= ngo.rating %></span> on Charity Watch
     <% } %>
 	<h6><%= ngo.address %></h6>
+	<% if (ngo.fb_data && ngo.fb_data.phone) { %>
+	<p><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;<%= ngo.fb_data.phone %></p>
+	<% } %>
+	
 	<% if (ngo.link) { %>
-		<div class="tbpadding10">
+		<p>
+			<% if (ngo.fb) { %>
+				<a href="<%= ngo.fb %>"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+				&nbsp;|&nbsp;
+			<% } %>
+			<% if (ngo.tw) { %>
+					<a href="<%= ngo.tw %>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+				&nbsp;|&nbsp;
+			<% } %>
 			<a href="<%= ngo.link %>">
-		    	<i class="fa fa-link" aria-hidden="true"></i>&nbsp;Website
-		  </a>
-		</div>
+		    	<i class="fa fa-globe" aria-hidden="true"></i>
+		  	</a>
+		</p>
 	<% } else if (ngo.source_link) { %>
-		<div class="tbpadding10">
+		<p>
+			<% if (ngo.fb) { %>
+					<a href="<%= ngo.fb %>"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+				&nbsp;|&nbsp;
+			<% } %>
+			<% if (ngo.tw) { %>
+					<a href="<%= ngo.tw %>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+				&nbsp;|&nbsp;
+			<% } %>
 			<a href="<%= ngo.source_link %>">
 		    	<i class="fa fa-link" aria-hidden="true"></i>&nbsp;Website
 		  </a>
-		</div>
+		</p>
 	<% } else { %>
 	<% } %>
-	
+	<% if (ngo.areas) { %>
+		<p>
+		<% for(var i = 0; i < ngo.areas.length; i=i+1) { %>
+			<span class="chip teal white-text"><%= ngo.areas[i] %></span>&nbsp;
+		<% } %>
+		</p>
+	<% } %>
 	<% if (ngo.source_data && ngo.source_data.irs_subsection) { %>
 		<div class="tbpadding10">
 			<div class="chip">
@@ -33,12 +59,16 @@
 		</div>
 	<% } %>
 	<% if (ngo.mission) { %>
-	   <p>
+	   <p class="tbpadding10">
 		<%= ngo.fb_data.mission %>
 		</p>
 	<% } else if (ngo.fb_data && ngo.fb_data.mission) { %>
-	<p>
+	<p class="tbpadding10">
 		<%= ngo.fb_data.mission %>
+	</p>
+	<% } else if (ngo.fb_data && ngo.fb_data.about) { %>
+	<p class="tbpadding10">
+		<%= ngo.fb_data.about %>
 	</p>
 	<% } %>
 </div>
