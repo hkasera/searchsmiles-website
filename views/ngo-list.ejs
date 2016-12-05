@@ -32,21 +32,55 @@
     <li class="waves-effect"><a href="#!">Z</a></li>
     <li class="waves-effect"><a href="#!"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
   </ul>
-      <div class="row">
-      <% for(var i=0; i < ngos.length; i++) { %>
-        <div class="col s12 m2">
-        <a href='/ngo/<%= ngos[i]["_id"] %>'>
-          <div class="card small">
-            <div class="card-image">
-                        <img src="http://lorempixel.com/150/150/">
-            
-            </div>
-            <div class="card-title teal-text" style="font-size:15px;padding:10px"><%= substr(ngos[i]["_source"]["name"],40) %></div>
-          </div>
-        </a>
-        </div>
+
+<% if (ngos.length != 0) { %>
+<div class="container container-bottom">
+    
+    <% for(var i = 0; i < ngos.length; i=i+3) { %>
+    <div class="row">
+        <% for(var j = i; j < i+3; j=j+1) { %>
+            <% if(j < ngos.length) { %>
+                <div class="col m4 event-card">
+                    <div class="card plain-card padding10 light-orange">
+                        <div class="card-body">
+                            <h5 class="red-text text-darken-3"> <%= ngos[j]._source.name %></h5>
+                            
+                            <p>
+                                <% if(ngos[j]._source["formatted_address"]) { %>
+                                <span><%= ngos[j]._source["formatted_address"] %> </span>
+                                <% } %>
+                            </p>
+                            
+                            <p>
+                                <% if(ngos[j]._source["gs_data"] && ngos[j]._source["gs_data"]["ruling_year"]) { %>
+                                <span><%= ngos[j]._source["gs_data"]["ruling_year"] %> </span>
+                                <% } %>
+                                
+                            </p>
+                            <% if(ngos[j]["_id"]) { %>
+                                <p>
+                                    <a class="teal-text" target="_blank" href="/ngo/<%= ngos[j]._id %>">More Details &nbsp;<i class="fa fa-link"></i></a>
+                                    <% if(ngos[j]._source["source"]) { %>
+                                        <span class="new badge" data-badge-caption='<%= ngos[j]._source["source"] %>'>&nbsp;</span>
+                                    <% } %>
+                                </p>
+                            <% } %> 
+                        </div>
+                    </div>
+                </div>
+            <% } %>
         <% } %>
-        </div>
+    </div>
+    <% } %>
+    
+</div>
+<% } else { %>
+<div class="container container-bottom">
+    <blockquote>
+          There are no ngos in this category!
+    </blockquote>
+</div>
+<% } %>
 
 
 <% include partials/footer %>

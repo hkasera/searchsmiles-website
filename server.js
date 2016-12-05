@@ -115,7 +115,7 @@ var SampleApp = function() {
             res.setHeader('Content-Type', 'text/html');
             res.render("stats.ejs");
         };
-        self.routes['/ngos'] = function(req, res) {
+        self.routes['/ngos/:id'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             api.getNGOs(function(ngos){
                 res.render("ngo-list.ejs",{API_KEY:  process.env.GMAPP_BROWSER_KEY,"ngos":ngos});
@@ -123,10 +123,10 @@ var SampleApp = function() {
                 res.status(500).send(err);
             }) 
         };
-        self.routes['/ngos/:startsWith'] = function(req, res) {
+        self.routes['/api/get/ngos'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            api.filterNGOs(req.params,function(ngos){
-                res.render("ngo-list.ejs",{API_KEY:  process.env.GMAPP_BROWSER_KEY,"ngos":ngos});
+            api.getNGOs(function(ngos){
+                 res.send(ngos);
             },function(err){
                 res.status(500).send(err);
             }) 
