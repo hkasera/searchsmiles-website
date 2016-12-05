@@ -1,4 +1,5 @@
 var client = require('./es');
+var moment = require('moment');
 
 var getLocation = function(callback, err_callback) {
     client.search({
@@ -46,6 +47,31 @@ var getNGOs = function(callback, err_callback) {
         err_callback(err);
     });
 }
+var filterNGOs = function(params,callback, err_callback) {
+    client.search({
+        index: 'ngos',
+        type: 'ngo',
+        size:1000,
+        body: {
+            "query": {
+                "bool": {
+                    "must": [{
+                        "exists": {
+                            "field": "location"
+                        }
+                    }]
+                },
+                "match_phrase": {
+                  "name": params.startsWith
+                }
+            }
+        }
+    }).then(function(resp) {
+        callback(resp.hits.hits);
+    }, function(err) {
+        err_callback(err);
+    });
+}
 
 var getNGODetails = function(id,callback, err_callback) {
     client.get({
@@ -58,9 +84,42 @@ var getNGODetails = function(id,callback, err_callback) {
         err_callback(err);
     });
 }
+
+var getUpcomingEvents = function(callback, err_callback){
+    var date = moment().format('DD/MM/YYYY');
+    client.search({
+        index: 'ngos',
+        type: 'event',
+        size:100,
+        body:{
+          "query": {
+            "range": {
+              "start_time": {
+                "gte": date,
+                "format": "dd/MM/yyyy"
+              }
+            }
+          },
+          "sort": [
+            {
+              "start_time": {
+                "order": "asc"
+              }
+            }
+          ]
+        }
+    }).then(function(resp) {
+        //console.log(resp)
+        callback(resp.hits.hits);
+    }, function(err) {
+        err_callback(err);
+    });
+}
 //Exports added
 module.exports = {
     getLocation: getLocation,
     getNGODetails:getNGODetails,
-    getNGOs:getNGOs
+    getNGOs:getNGOs,
+    filterNGOs:filterNGOs,
+    getUpcomingEvents:getUpcomingEvents
 };

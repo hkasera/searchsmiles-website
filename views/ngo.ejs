@@ -19,7 +19,7 @@
 		</div>
 	<% } else { %>
 	<% } %>
-	<% if (ngo.source_data.irs_subsection) { %>
+	<% if (ngo.source_data && ngo.source_data.irs_subsection) { %>
 		<div class="tbpadding10">
 			<div class="chip">
 		    	<%= ngo.source_data.irs_subsection %>

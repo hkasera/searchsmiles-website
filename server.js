@@ -5,6 +5,7 @@ var fs      = require('fs');
 var path    =  require('path');
 var ejs = require('ejs');
 var api = require('./core/api');
+var moment = require('moment');
 /**
  *  Define the sample application.
  */
@@ -118,6 +119,14 @@ var SampleApp = function() {
                 res.status(500).send(err);
             }) 
         };
+        self.routes['/ngos/:startsWith'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            api.filterNGOs(req.params,function(ngos){
+                res.render("ngo-list.ejs",{API_KEY:  process.env.GMAPP_BROWSER_KEY,"ngos":ngos});
+            },function(err){
+                res.status(500).send(err);
+            }) 
+        };
         self.routes['/ngo/:id'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             api.getNGODetails(req.params.id,function(ngo){
@@ -130,6 +139,24 @@ var SampleApp = function() {
         self.routes['/api/get/ngo/:id'] = function(req, res) {
             res.setHeader('Content-Type', 'application/json');
             api.getNGODetails(req.params.id,function(docs){
+                res.send(docs);
+            },function(err){
+                res.status(500).send(err);
+            })
+        };
+
+        self.routes['/events/upcoming'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            api.getUpcomingEvents(function(events){
+                res.render("events.ejs",{"events":events});
+            },function(err){
+                res.status(500).send(err);
+            })
+        };
+
+        self.routes['/api/get/events/upcoming'] = function(req, res) {
+            res.setHeader('Content-Type', 'application/json');
+            api.getUpcomingEvents(function(docs){
                 res.send(docs);
             },function(err){
                 res.status(500).send(err);
@@ -161,6 +188,15 @@ var SampleApp = function() {
         }
         self.app.locals.min = function(x,y) {
             return x < y ? x : y;
+        }
+
+        self.app.locals.formatDate = function(dateStr){
+            return moment(dateStr).format('MMMM Do YYYY, h a');
+        }
+
+        self.app.locals.isDateToday = function(dateStr){
+            //console.log(moment().diff(moment(dateStr),'days'));
+            return moment().diff(moment(dateStr),'days') == 0;
         }
 
         //  Add handlers for the app (from the routes).

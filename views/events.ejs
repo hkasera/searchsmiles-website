@@ -1,0 +1,66 @@
+<% include partials/header %>
+<div class="container">
+    <div class="row">
+    	<div class="col m12">
+            <h4 class="text-center">Upcoming Events</h4>
+        </div>
+    </div>
+</div>
+<% if (events.length != 0) { %>
+<div class="container container-bottom">
+	
+	<% for(var i = 0; i < events.length; i=i+3) { %>
+	<div class="row">
+		<% for(var j = i; j < i+3; j=j+1) { %>
+			<% if(j < events.length) { %>
+				<div class="col m4 event-card">
+					<div class="card plain-card padding10 light-orange">
+						<div class="card-body">
+							<h5 class="red-text text-darken-3"> <%= events[j]._source.name %></h5>
+							<p class="blue-text"><small><i class="fa fa-university"></i>&nbsp;<a href="/ngo/<%= events[j]._parent %>">Organizer</a></small></p>
+							<% if (isDateToday(events[j]._source.start_time)) { %>
+								<p><span class="new badge" data-badge-caption="Today">&nbsp;</span></p>
+								<p><i class="fa fa-clock-o" aria-hidden="true"></i><small>&nbsp;&nbsp;<%= formatDate(events[j]._source.start_time) %></small></p>
+							<% } else { %>
+								<small><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;<%= formatDate(events[j]._source.start_time) %></small>
+							<% } %>	
+							<% if(events[j]._source.place &&  events[j]._source.place.location) { %>
+								<p>
+									<% if(events[j]._source.place.location.street) {%> 
+										<%= events[j]._source.place.location.street %>, 
+									<% } %>
+									<% if(events[j]._source.place.location.city) {%> 
+										<%= events[j]._source.place.location.city %>,<br>
+									<% } %>
+									<% if(events[j]._source.place.location.state) {%> 
+										<%= events[j]._source.place.location.state %>, <br>
+									<% } %>
+									<% if(events[j]._source.place.location.country) {%> 
+										<%= events[j]._source.place.location.country %>
+									<% } %>
+								</p>
+								<small>
+									<a class="green-text" target="_blank" href="https://www.google.com/maps?q=<%= events[j]._source.location.lat %>,<%= events[j]._source.location.lon %>"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;Open in Maps</a>
+								</small>
+							<% } %>		
+							<% if(j < events[j]._source.id) { %>
+								<p><a class="teal-text" target="_blank" href="https://www.facebook.com/events/<%= events[j]._source.id %>">RSVP now</a></p>
+							<% } %>		
+						</div>
+					</div>
+				</div>
+			<% } %>
+		<% } %>
+	</div>
+	<% } %>
+	
+</div>
+<% } else { %>
+<div class="container container-bottom">
+	<blockquote>
+	      There are no upcoming events at the moment. Please check back later!
+	</blockquote>
+</div>
+<% } %>
+      
+<% include partials/footer %>

@@ -51,8 +51,11 @@ body {
 .tbpadding10{
     padding: 10px 0;
 }
+.padding10{
+    padding: 10px;
+}
 .container-bottom{
-    margin-bottom: 50px;
+    margin-bottom: 80px;
 }
 footer{
     position: fixed;
