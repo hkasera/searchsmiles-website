@@ -60,7 +60,7 @@
 	<% } %>
 	<% if (ngo.mission) { %>
 	   <p class="tbpadding10">
-		<%= ngo.fb_data.mission %>
+		<%= ngo.mission %>
 		</p>
 	<% } else if (ngo.fb_data && ngo.fb_data.mission) { %>
 	<p class="tbpadding10">
@@ -91,6 +91,48 @@
 	</div>
 </div>
 <% } %>
+<% if (ngo.gs_data && ngo.gs_data.exchange && ngo.gs_data.exchange.photos && ngo.gs_data.exchange.photos.length >= 3) { %>
+<div class="center tbpadding10">
+	<h5> Photo Gallery </h5>
+	<div class="row">
+	<% for(var i=0; i < min(ngo.gs_data.exchange.photos.length,4); i++) { %>
+	<div class="col s12 m4">
+
+          <div class="card">
+            <div class="card-image">
+              <img class="materialboxed" src="<%= ngo.gs_data.exchange.photos[i].url %>">
+              
+            </div>
+            <div class="card-content">
+              <p><%= ngo.gs_data.exchange.photos[i].caption %></p>
+            </div>
+          </div>
+   	</div>
+	<% } %>
+	</div>
+</div>
+<% } %>
+
+<!--<% if (ngo.gs_data && ngo.gs_data.exchange && ngo.gs_data.exchange.videos && ngo.gs_data.exchange.videos.length != 0) { %>
+<div class="center tbpadding10">
+	<h5> Video Gallery </h5>
+	<div class="row">
+	<% for(var i=0; i < min(ngo.gs_data.exchange.videos.length,4); i++) { %>
+	<div class="col s12 m4">
+
+          <iframe src="http://www.youtube.com/embed/S_EK5trs1sI" frameborder="0" allowfullscreen></iframe>
+          
+   	</div>
+   	<div class="col s12 m4">
+
+          <iframe src="http://www.youtube.com/embed/S_EK5trs1sI" frameborder="0" allowfullscreen></iframe>
+          
+   	</div>
+	<% } %>
+	</div>
+</div>
+<% } %>-->
+<div class="container-bottom">&nbsp;</div>
 <% if (ngo.location) { %>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap">
