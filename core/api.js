@@ -48,6 +48,15 @@ var getNGOs = function(callback, err_callback) {
     });
 }
 var filterNGOs = function(params,callback, err_callback) {
+    var query_match = {};
+    if(params.text){
+        query_match = {
+            "name": {
+                "query": params.text+"*",
+                "type": "phrase"
+            }
+        }
+    }
     client.search({
         index: 'ngos',
         type: 'ngo',
@@ -59,10 +68,10 @@ var filterNGOs = function(params,callback, err_callback) {
                         "exists": {
                             "field": "location"
                         }
-                    }]
-                },
-                "match_phrase": {
-                  "name": params.startsWith
+                    },{
+                        "match":query_match
+                    }
+                    ]
                 }
             }
         }
