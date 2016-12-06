@@ -1,0 +1,67 @@
+<% include partials/header %>
+<% if (event.location) { %>
+<div class="map-container">
+    <div id="map"></div>
+</div>
+<% } %>
+<div class="container center">
+	<h4><%= event.name %></h4>
+	<% if (event.id) { %>
+		<p>
+			<a href="https://www.facebook.com/events/<%= event.id %>"><i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;&nbsp;RSVP on facebook</a>
+		</p>
+	<% }%>
+	<% if (isDateToday(event.start_time)) { %>
+		<p><span class="chip teal white-text" data-badge-caption="">Happening Today</span></p>
+		<p>
+			<i class="fa fa-clock-o" aria-hidden="true"></i>
+			<small>
+			&nbsp;&nbsp;<%= formatDate(event.start_time) %> -
+			&nbsp;&nbsp;<%= formatDate(event.end_time) %>	
+			</small>
+		</p>
+	<% } else { %>
+		<p>
+			<i class="fa fa-clock-o" aria-hidden="true"></i>
+			<small>
+			&nbsp;&nbsp;<%= formatDate(event.start_time) %> -
+			&nbsp;&nbsp;<%= formatDate(event.end_time) %>	
+			</small>
+		</p>
+	<% } %>	
+
+	<% if (event.description) { %>
+	   <p class="tbpadding10 left-align">
+		<%= event.description %>
+		</p>
+	<% } %>
+</div>
+
+<% if (event.location) { %>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=<%= API_KEY %>&callback=initMap">
+</script>
+<script type="text/javascript">
+	function initMap() {
+		var map, initialLocation, marker, mapOptions, infowindow;
+	   initialLocation = new google.maps.LatLng(<%= event.location.lat %>,<%= event.location.lon %>);
+	   mapOptions = {
+	       zoom: 12,
+	       center: initialLocation
+	   }
+	   map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	   marker = new google.maps.Marker({
+	       position: initialLocation,
+	       title: "<%= event.name %>"
+	   });
+	   infowindow = new google.maps.InfoWindow({
+	       content: "<%= event.name %>"
+	     });
+	   marker.addListener('click', function() {
+	       infowindow.open(map, marker);
+	   });
+	   marker.setMap(map);
+	}
+</script>
+<% } %>
+<% include partials/footer %>

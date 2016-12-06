@@ -16,7 +16,9 @@
 				<div class="col m4 event-card">
 					<div class="card plain-card padding10 light-orange">
 						<div class="card-body">
-							<h5 class="red-text text-darken-3"> <%= events[j]._source.name %></h5>
+							<h5 class="red-text text-darken-3"> 
+								<a class="red-text text-darken-3" href="/event/<%= events[j]._routing %>/<%= events[j]._id %>"><%= events[j]._source.name %></a>
+							</h5>
 							<p class="blue-text"><small><i class="fa fa-university"></i>&nbsp;<a href="/ngo/<%= events[j]._parent %>">Organizer</a></small></p>
 							<% if (isDateToday(events[j]._source.start_time)) { %>
 								<p><span class="new badge" data-badge-caption="Today">&nbsp;</span></p>

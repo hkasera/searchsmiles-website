@@ -85,6 +85,19 @@ var getNGODetails = function(id,callback, err_callback) {
     });
 }
 
+var getEventDetails = function(params,callback, err_callback) {
+    client.get({
+        index: 'ngos',
+        type: 'event',
+        "id": params.id,
+        routing:params.routing_id
+    }).then(function(resp) {
+        callback(resp["_source"]);
+    }, function(err) {
+        err_callback(err);
+    });
+}
+
 var getUpcomingEvents = function(callback, err_callback){
     var date = moment().format('DD/MM/YYYY');
     client.search({
@@ -121,5 +134,6 @@ module.exports = {
     getNGODetails:getNGODetails,
     getNGOs:getNGOs,
     filterNGOs:filterNGOs,
-    getUpcomingEvents:getUpcomingEvents
+    getUpcomingEvents:getUpcomingEvents,
+    getEventDetails:getEventDetails
 };

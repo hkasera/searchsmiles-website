@@ -140,6 +140,15 @@ var SampleApp = function() {
             })    
         };
 
+        self.routes['/event/:routing_id/:id'] = function(req, res) {
+            res.setHeader('Content-Type', 'text/html');
+            api.getEventDetails(req.params,function(event){
+                res.render("event.ejs",{API_KEY: process.env.GMAPP_BROWSER_KEY,"event":event});
+            },function(err){
+                res.status(500).send(err);
+            })    
+        };
+
         self.routes['/api/get/ngo/:id'] = function(req, res) {
             res.setHeader('Content-Type', 'application/json');
             api.getNGODetails(req.params.id,function(docs){
