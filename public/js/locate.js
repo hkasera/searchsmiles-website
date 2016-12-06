@@ -105,8 +105,10 @@ var initAutocomplete = function() {
 
 function handleNoGeolocation(errorFlag) {
 
-    $.when($.ajax("/get/bins/12/77")).then(locateBins, handleError);
-    map.setCenter(initialLocation);
+    $("#pac-input").show();
+    $.getJSON('/api/get/ngos/location').then(locateNGOs, handleError);
+    map.setCenter(defaultLocation);
+    map.setZoom(4);
 }
 
 
