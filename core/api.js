@@ -25,6 +25,41 @@ var getLocation = function(callback, err_callback) {
     });
 }
 
+var getLocationFiltered = function(params,callback, err_callback) {
+    var query_match = {};
+    if(params.city){
+        query_match = {
+            "city": {
+                "query": params.city,
+                "type": "phrase"
+            }
+        }
+    }
+    client.search({
+        index: 'ngos',
+        type: 'ngo',
+        size:5000,
+        body: {
+            "_source": ["name","location"],
+            "query": {
+                "bool": {
+                    "must": [{
+                        "exists": {
+                            "field": "location"
+                        }
+                    },{
+                        "match":query_match
+                    }]
+                }
+            }
+        }
+    }).then(function(resp) {
+        callback(resp.hits.hits);
+    }, function(err) {
+        err_callback(err);
+    });
+}
+
 var getNGOs = function(callback, err_callback) {
     client.search({
         index: 'ngos',
@@ -51,8 +86,8 @@ var filterNGOs = function(params,callback, err_callback) {
     var query_match = {};
     if(params.text){
         query_match = {
-            "name": {
-                "query": params.text+"*",
+            "name_prefix": {
+                "query": params.text,
                 "type": "phrase"
             }
         }
@@ -144,5 +179,6 @@ module.exports = {
     getNGOs:getNGOs,
     filterNGOs:filterNGOs,
     getUpcomingEvents:getUpcomingEvents,
-    getEventDetails:getEventDetails
+    getEventDetails:getEventDetails,
+    getLocationFiltered:getLocationFiltered
 };

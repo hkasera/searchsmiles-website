@@ -192,8 +192,15 @@ var SampleApp = function() {
                 res.send(docs);
             },function(err){
                 res.status(500).send(err);
-            })
-            
+            })           
+        }
+        self.routes['/api/get/ngos/location/filtered'] = function(req,res){
+            res.setHeader('Content-Type', 'application/json');
+            api.getLocationFiltered(req.query,function(docs){
+                res.send(docs);
+            },function(err){
+                res.status(500).send(err);
+            })           
         }
     };
 
