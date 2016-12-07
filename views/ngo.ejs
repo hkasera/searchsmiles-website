@@ -4,14 +4,14 @@
     <div id="map"></div>
 </div>
 <% } %>
-<div class="container center">
-	<h4><%= ngo.name %></h4>
+<div class="container center" itemscope itemtype="http://schema.org/NGO">
+	<h4 itemprop="name"><%= ngo.name %></h4>
 	<% if(ngo.rating) { %>
         Rated as : <span class="chip teal white-text"><%= ngo.rating %></span> on Charity Watch
     <% } %>
-	<h6><%= ngo.address %></h6>
+	<h6 itemprop="address" itemscope itemtype="http://schema.org/PostalAddress"><%= ngo.address %></h6>
 	<% if (ngo.fb_data && ngo.fb_data.phone) { %>
-	<p><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;<%= ngo.fb_data.phone %></p>
+	<p itemprop="telephone"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;<%= ngo.fb_data.phone %></p>
 	<% } %>
 	
 	<% if (ngo.link) { %>
